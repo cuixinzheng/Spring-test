@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="userDao" class="com.cui.dao.impl.UserDaoimpl"></bean>
-    <bean id="cui" class="com.cui.dao.impl.CuiDaoipml"></bean>
+<!--    <bean id="userDao" class="com.cui.dao.impl.UserDaoimpl" init-method="init" destroy-method="destory"></bean>-->
 
+<!--    <bean id="userDao" class="com.cui.factory.FactoryStatic" factory-method="getUserDao"></bean>-->
+
+<!--    <bean id="factory" class="com.cui.factory.FactoryDynamic" ></bean>-->
+<!--    <bean id="userDao" factory-bean="factory" factory-method="getUserDao"></bean>-->
+<!--    <bean id="cui" class="com.cui.dao.impl.CuiDaoipml"></bean>-->
+<!--    <bean id="userService" class="com.cui.dao.impl.UserServiceImpl">-->
+<!--        <property name="userDao" ref="userDao"></property>-->
+<!--    </bean>-->
+        <!--p命名空间    -->
+<!--    <bean id="userService" class="com.cui.dao.impl.UserServiceImpl" p:userDao-ref="userDao"/>-->
+    <bean id="user1" class="com.cui.domain.User">
+        <property name="name" value="tom"/>
+        <property name="addr" value="beijing"/>
+    </bean>
+    <bean id="user2" class="com.cui.domain.User">
+        <property name="name" value="lucy"/>
+        <property name="addr" value="guangzhou"/>
+    </bean>
+    <bean id="userDao" class="com.cui.dao.impl.UserDaoimpl">
+        <property name="username" value="zhangsan"/>
+        <property name="age" value="18"/>
+        <property name="strList">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+        <property name="userMap">
+            <map>
+                <entry key="u1" value-ref="user1"></entry>
+                <entry key="u2" value-ref="user2"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="p1">ppp1</prop>
+                <prop key="p2">ppp2</prop>
+                <prop key="p3">ppp3</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="userService" class="com.cui.dao.impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"></constructor-arg>
+    </bean>
 </beans>
